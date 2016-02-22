@@ -92,12 +92,12 @@
 			if(priceAll !== null){
 	            var ppprice = JSON.parse(priceAll);
 				
-				//Total price  
+				//Cal Total price  
+				console.log(ppprice.length);
 				for(var i = 0; i < ppprice.length; i++){
 					totalPrice += parseFloat(ppprice[i]);
-					totalPrice = parseFloat(totalPrice).toFixed(2);
-					}
-					console.log(totalPrice);		
+					TPrice = totalPrice.toFixed(2);
+					}	
 		
 			}else{
 				
@@ -113,9 +113,16 @@
 	        
 			if(cartAll != null){
 				$(".cartItem").html("Cart Product: " + cartAll);
-				$(".totalPrice").html("All Price: " + totalPrice + " $ ");
+				$(".totalPrice").html("All Price: " + TPrice + " $ ");
 
 			}
+			
+			
+			$('.updateCart').click(function(){
+			
+				location.reload(true)
+			
+			});
 		
 
 			//Clear Cart
@@ -150,6 +157,8 @@
 			    //return null
 				
 			    }
+				
+
 			
 			
 			//remove item function !!! NEED FIX !!!
