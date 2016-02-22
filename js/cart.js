@@ -2,8 +2,9 @@
     
 	Easy Shopping Cart 
     Create By Jeff WU
-	2016/02/15
+	from 2016/02/15 to ...
 	for University of Portsmouth
+	unfinished
 	
 */
 
@@ -18,6 +19,7 @@
 		//Statment Ready
 		var items = [];
 		var pprice =[];
+		var products = [];
 		var totalPrice = 0;
 		var cartAll= localStorage.getItem('item');
         var priceAll = localStorage.getItem('price'); 
@@ -25,8 +27,11 @@
         
         //check if cartAll == null
         if(cartAll !== null){
+		
         	var proNum = JSON.parse(cartAll).length;
+			
         }else{
+		
         	proNum = 0;
         }
         console.log(proNum);
@@ -44,16 +49,25 @@
 				var mName = $(this).parent().children('.name').html();
 				var mPrice = $(this).parent().children('.price').html();
 				var mQty = $(this).parent().children('.qty').val();
-				mQty = parseInt(mQty);
-				console.log("qty: " + mQty);
 				
+				// Change type of data to integer forcibly
+				mQty = parseInt(mQty);   
+				
+				//Calculate the price with quantity
 				if(mQty >=0 ){
+				
 					var mPriceCal = mPrice * mQty;
+					mPriceCal = parseFloat(mPriceCal).toFixed(2);  //Fix the calculate issue.
+					
 				}else{
+				    
+					//verity input number
 					alert("Please input a right number");
 					mQty = 1;
 					mPriceCal = mPrice * mQty;
+					
 				}
+				
             	//Add item to HTML localStorage 
 				items.push(mName,mQty,mPriceCal);
 				localStorage.setItem ('item', JSON.stringify(items));
@@ -61,7 +75,7 @@
 				pprice.push(mPriceCal);
 				localStorage.setItem ('price', JSON.stringify(pprice));
 
-				//Test alert to check if the function work
+				//Alert to costumer
 				alert("You Add " + mName + " in cart successful " + " Price: " + mPrice + "  You already have " +proNum + " products");
 				
 		    
@@ -72,42 +86,43 @@
 			}
 		});
 		
-		//Display Cart
+		//Display Cart Function
 		$(function(){
+		
 			if(priceAll !== null){
 	            var ppprice = JSON.parse(priceAll);
-	            ppprice = parseFloat(ppprice);
+				
+				//Total price  
 				for(var i = 0; i < ppprice.length; i++){
 					totalPrice += parseFloat(ppprice[i]);
-					totalPrice = totalPrice.toFixed(2);
+					totalPrice = parseFloat(totalPrice).toFixed(2);
 					}
-				console.log(totalPrice);		
+					console.log(totalPrice);		
 		
-		    }else{
+			}else{
+				
+				//if No item...
 				ppprice = 0;
+				
 		    }
 			
 		
 
 
-			//Cart Box
+			//Display Cart 2Front
 	        
 			if(cartAll != null){
 				$(".cartItem").html("Cart Product: " + cartAll);
-				//$(".cartPrice").html("Price: " + priceAll);
 				$(".totalPrice").html("All Price: " + totalPrice + " $ ");
 
 			}
 		
-		
-		
-		
-		
+
 			//Clear Cart
 		
 			$(".clearCart").click(function(){
 				
-				alert("clearcart");
+				alert("Clear Cart");
 				localStorage.clear();
 				
 			});
@@ -116,15 +131,34 @@
 			
 			
 			//Remove item from Cart
-			for(var btnNum = 0; btnNum < JSON.parse(cartAll).length; btnNum++){
+			
+			if(JSON.parse(priceAll) !== null){
+			
+				for(var btnNum = 0; btnNum < JSON.parse(priceAll).length; btnNum++){
+				
+					var btnRealNum = btnNum + 1;	
+					var removeBtn = document.createElement('button');
+					removeBtn.className = "removeBtn"
+					var bottonValue = document.createTextNode('Remove Item' + btnRealNum);
+					removeBtn.appendChild(bottonValue);
+					document.body.appendChild(removeBtn);
 					
-				var removeBtn = document.createElement('button');
-				var bottonValue = document.createTextNode('Remove Item' + btnNum);
-				removeBtn.appendChild(bottonValue);
-				document.body.appendChild(removeBtn);
-				//cartAll.splice(btnNum,1);
-				//priceAll.splice(btnNum,1);
-			}
+					}
+
+			}else{
+			
+			    //return null
+				
+			    }
+			
+			
+			//remove item function !!! NEED FIX !!!
+			/*$(".removeBtn").click(function(){
+			
+			    this.cartAll.splice(btnNum,3);
+				this.priceAll.splice(btnNum,1);
+			
+			});*/
 			
 		
 		});
