@@ -76,6 +76,7 @@
 		$(function(){
 			if(priceAll !== null){
 	            var ppprice = JSON.parse(priceAll);
+	            ppprice = parseFloat(ppprice);
 				for(var i = 0; i < ppprice.length; i++){
 					totalPrice += parseFloat(ppprice[i]);
 					totalPrice = totalPrice.toFixed(2);
@@ -110,9 +111,28 @@
 				localStorage.clear();
 				
 			});
-
+			
+			
+			
+			
+			//Remove item from Cart
+			for(var btnNum = 0; btnNum < JSON.parse(cartAll).length; btnNum++){
+					
+				var removeBtn = document.createElement('button');
+				var bottonValue = document.createTextNode('Remove Item' + btnNum);
+				removeBtn.appendChild(bottonValue);
+				document.body.appendChild(removeBtn);
+				//cartAll.splice(btnNum,1);
+				//priceAll.splice(btnNum,1);
+			}
+			
 		
 		});
+		
+
+        
+			
+
 		
 		//Check if localStorage oException
 		try {
