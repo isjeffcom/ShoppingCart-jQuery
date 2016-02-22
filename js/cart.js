@@ -19,7 +19,6 @@
 		//Statment Ready
 		var items = [];
 		var pprice =[];
-		var products = [];
 		var totalPrice = 0;
 		var cartAll= localStorage.getItem('item');
         var priceAll = localStorage.getItem('price'); 
@@ -34,65 +33,64 @@
 		
         	proNum = 0;
         }
+		
         console.log(proNum);
-		
-
-		
 		
         //Add2Cart function
 		
 		$(".add").click(function(){
-		    if(proNum < 10){
+		
+		        
 
-			
 				//DOM the name and price from the HTML
 				var mName = $(this).parent().children('.name').html();
 				var mPrice = $(this).parent().children('.price').html();
 				var mQty = $(this).parent().children('.qty').val();
-				
 				// Change type of data to integer forcibly
-				mQty = parseInt(mQty);   
+				mQty = parseInt(mQty);  
 				
+
+
 				//Calculate the price with quantity
 				if(mQty >=0 ){
-				
+						
 					var mPriceCal = mPrice * mQty;
 					mPriceCal = parseFloat(mPriceCal).toFixed(2);  //Fix the calculate issue.
-					
+							
 				}else{
-				    
+							
 					//verity input number
 					alert("Please input a right number");
 					mQty = 1;
 					mPriceCal = mPrice * mQty;
 					
-				}
+				};
 				
-            	//Add item to HTML localStorage 
+				//Add item to HTML localStorage 
+								
 				items.push(mName,mQty,mPriceCal);
 				localStorage.setItem ('item', JSON.stringify(items));
-					
+									
 				pprice.push(mPriceCal);
 				localStorage.setItem ('price', JSON.stringify(pprice));
 
 				//Alert to costumer
 				alert("You Add " + mName + " in cart successful " + " Price: " + mPrice + "  You already have " +proNum + " products");
-				
-		    
-			}else{
+				console.log('array items: ' + items);
+                console.log('array pprice: ' + pprice);
+				console.log('array cartAll: ' + cartAll);
+                console.log('array priceAll: ' + pprice);
 			
-				alert("Sorry, can not add more item");
-			
-			}
 		});
 		
 		//Display Cart Function
 		$(function(){
 		
+		    //Cal Total price  
 			if(priceAll !== null){
 	            var ppprice = JSON.parse(priceAll);
 				
-				//Cal Total price  
+			
 				console.log(ppprice.length);
 				for(var i = 0; i < ppprice.length; i++){
 					totalPrice += parseFloat(ppprice[i]);
@@ -107,16 +105,16 @@
 		    }
 			
 		
-
-
 			//Display Cart 2Front
 	        
 			if(cartAll != null){
+			
 				$(".cartItem").html("Cart Product: " + cartAll);
 				$(".totalPrice").html("All Price: " + TPrice + " $ ");
 
 			}
-			
+		
+
 			
 			$('.updateCart').click(function(){
 			
@@ -141,14 +139,17 @@
 			
 			if(JSON.parse(priceAll) !== null){
 			
+			    //Button create function
 				for(var btnNum = 0; btnNum < JSON.parse(priceAll).length; btnNum++){
 				
-					var btnRealNum = btnNum + 1;	
-					var removeBtn = document.createElement('button');
-					removeBtn.className = "removeBtn"
-					var bottonValue = document.createTextNode('Remove Item' + btnRealNum);
-					removeBtn.appendChild(bottonValue);
-					document.body.appendChild(removeBtn);
+					var btnRealNum = btnNum + 1;	//Display real item number
+					var removeBtn = document.createElement('button');    //Create Button
+					removeBtn.className = "removeBtn";  //Add className
+					var bottonValue = document.createTextNode('Remove Item' + btnRealNum);  //Give Button Value
+					removeBtn.appendChild(bottonValue);  //Add Child
+					document.body.appendChild(removeBtn);  
+					
+					
 					
 					}
 
@@ -162,12 +163,11 @@
 			
 			
 			//remove item function !!! NEED FIX !!!
-			/*$(".removeBtn").click(function(){
+			$(".removeBtn").click(function(){
+			    console.log(JSON.parse(cartAll));
+
 			
-			    this.cartAll.splice(btnNum,3);
-				this.priceAll.splice(btnNum,1);
-			
-			});*/
+			});
 			
 		
 		});
