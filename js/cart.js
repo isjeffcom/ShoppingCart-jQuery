@@ -15,8 +15,10 @@
 
     //DOM ready for all
 	$(document).ready(function(){
-	    
-		//Statment Ready
+	
+	    console.log('Start initialize');
+		
+		//Statement Ready
 		var items = [];
 		var pprice =[];
 		var totalPrice = 0;
@@ -24,7 +26,9 @@
         var priceAll = localStorage.getItem('price'); 
 
         
-        //check if cartAll == null
+		console.log('Start Count proNum');
+		
+		//Start Count proNum
         if(cartAll !== null){
 		
         	var proNum = JSON.parse(cartAll).length;
@@ -32,16 +36,23 @@
         }else{
 		
         	proNum = 0;
+			
         }
 		
-        console.log(proNum);
+        console.log('proNum: ' + proNum);
+		
+		
+		console.log('array items: ' + items);
+        console.log('array pprice: ' + pprice);
+		console.log('array cartAll: ' + cartAll);
+        console.log('array priceAll: ' + pprice);
 		
         //Add2Cart function
+		console.log('Start Add Function');
 		
 		$(".add").click(function(){
 		
 		        
-
 				//DOM the name and price from the HTML
 				var mName = $(this).parent().children('.name').html();
 				var mPrice = $(this).parent().children('.price').html();
@@ -68,8 +79,10 @@
 				
 				//Add item to HTML localStorage 
 								
+
 				items.push(mName,mQty,mPriceCal);
 				localStorage.setItem ('item', JSON.stringify(items));
+
 									
 				pprice.push(mPriceCal);
 				localStorage.setItem ('price', JSON.stringify(pprice));
@@ -82,6 +95,8 @@
                 console.log('array priceAll: ' + pprice);
 			
 		});
+		
+		console.log('Cal All Price');
 		
 		//Display Cart Function
 		$(function(){
@@ -100,11 +115,11 @@
 			}else{
 				
 				//if No item...
-				ppprice = 0;
+				TPrice = 0;
 				
 		    }
 			
-		
+		    console.log('Push Cart item to front');
 			//Display Cart 2Front
 	        
 			if(cartAll != null){
@@ -117,6 +132,7 @@
 
 			
 			$('.updateCart').click(function(){
+			console.log('Start UpdateCart // refresh the page');
 			
 				location.reload(true)
 			
@@ -124,7 +140,8 @@
 		
 
 			//Clear Cart
-		
+		    console.log('clear Storage');
+			
 			$(".clearCart").click(function(){
 				
 				alert("Clear Cart");
@@ -136,8 +153,9 @@
 			
 			
 			//Remove item from Cart
-			
+			console.log('Display the remove btn');
 			if(JSON.parse(priceAll) !== null){
+           
 			
 			    //Button create function
 				for(var btnNum = 0; btnNum < JSON.parse(priceAll).length; btnNum++){
@@ -177,7 +195,7 @@
 			
 
 		
-		//Check if localStorage oException
+		Check if localStorage oException
 		try {
 		    localStorage.setItem(key, value);
 		}catch(oException){
