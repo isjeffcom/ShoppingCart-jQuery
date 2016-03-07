@@ -195,7 +195,7 @@
 			
 
 		
-		Check if localStorage oException
+		//Check if localStorage oException
 		try {
 		    localStorage.setItem(key, value);
 		}catch(oException){
