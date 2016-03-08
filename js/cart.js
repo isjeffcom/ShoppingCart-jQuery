@@ -17,21 +17,17 @@
 	$(document).ready(function(){
 	
 		//Statement Ready
-		var items = [];
+		var qty = [];
+		var price = [];
 		var names = [];
 		var pprice =[];
-		var totalPrice = 0;
-		var itemsAll= localStorage.getItem('item');
-		var namesAll = localStorage.getItem('name');
+	
+		var mpriceAll= localStorage.getItem('mPrice');
+		var mqtyAll= localStorage.getItem('mQty')
+		var cartAll = localStorage.getItem('name');
         var priceAll = localStorage.getItem('price');
-		
-		/*items: temp array for storage all items info (name, qty, price with qty)
-		* names: temp array for storage item names in cart
-		* pprice: temp array for storage price
-		* itemsAll: localStorage array for storage all items info (name, qty, price with qty)
-		* namesAll: localStorage array for storage item names in cart
-		* priceAll: localStorage array for storage all price
-		*/
+        
+        var totalPrice = 0;
 		
 		/*ADD BY Andreea.Molnar
 		 * for fix the Items array
@@ -41,19 +37,12 @@
 
 		
 		//Get value from localStorage
-        if(itemsAll !== null){
-			items=JSON.parse(itemsAll);
-        }else{
-        	proNum = 0;
-        }
-		if (priceAll != null) {
-			pprice = JSON.parse(priceAll);
-		}
-		
-		if (namesAll != null) {
+		if (cartAll != null) {
 			//Count Products Number
-			var proNum = JSON.parse(namesAll).length;
-			names = JSON.parse(namesAll);
+			names = JSON.parse(cartAll);
+			price=JSON.parse(mpriceAll);
+			pprice = JSON.parse(priceAll);
+			qty = JSON.parse(mqtyAll);
 		}
 		
         //Add2Cart function
@@ -67,7 +56,6 @@
 				var mQty = $(this).parent().children('.qty').val();
 				// Change type of data to integer forcibly
 				mQty = parseInt(mQty);  
-	
 				
 				//Check if items repeat
 				if(names != null){
@@ -97,9 +85,13 @@
 				
 				//Add item to HTML localStorage 
 								
-
-				items.push(mName,mQty,mPriceCal);
-				localStorage.setItem ('item', JSON.stringify(items));
+				
+				
+				qty.push(mQty);
+				localStorage.setItem ('mQty', JSON.stringify(qty));
+				
+				price.push(mPriceCal);
+				localStorage.setItem ('mPrice', JSON.stringify(price));
 				
 				names.push(mName);
 				localStorage.setItem ('name', JSON.stringify(names));
@@ -108,10 +100,8 @@
 				localStorage.setItem ('price', JSON.stringify(pprice));
 
 				//Alert to costumer
-				alert("You Add " + mName + " in cart successful " + " Price: " + mPrice + "  You already have " + proNum + " products");
-				
-				
-			
+				alert("You Add " + mName + " in cart successful " + " Price: " + mPrice + "  You already have ");
+
 		});
 		
 		
@@ -119,11 +109,12 @@
 		$(function(){
 		
 		    //Cal Total price  
-			if(priceAll !== null){
+		    var TPrice;
+			if(names[0] !== undefined){
+				console.log('price calculate info ' + pprice + priceAll);
 	            var ppprice = JSON.parse(priceAll);
-				
-			
-				console.log(ppprice.length);
+	            console.log(names[0]);
+	
 				for(var i = 0; i < ppprice.length; i++){
 					totalPrice += parseFloat(ppprice[i]);
 					TPrice = totalPrice.toFixed(2);
@@ -139,9 +130,9 @@
 
 			//Display Cart 2Front
 	        
-			if(namesAll != null){
+			if(cartAll != null){
 			
-				$(".cartItem").html("Cart Product: " + namesAll);
+				$(".cartItem").html("Cart Product: " + cartAll);
 				$(".totalPrice").html("All Price: " + TPrice + " $ ");
 
 			}
@@ -175,7 +166,7 @@
            
 			
 			    //Button create function
-				for(var btnNum = 0; btnNum < JSON.parse(namesAll).length; btnNum++){
+				for(var btnNum = 0; btnNum < JSON.parse(cartAll).length; btnNum++){
 				
 					var btnRealNum = btnNum + 1;	//Display real item number
 					var removeBtn = document.createElement('button');    //Create Button
@@ -195,21 +186,25 @@
 
 			
 			
-			//remove item function !!! NEED FIX !!!
+			//remove item function
 			console.log(names);
 			$(".removeBtn").click(function(){
 			    
-				//Restore button number
+				//Restore array number from button
 			    var thisNum = $(this).html();
 				thisNum = thisNum.slice(-1) -1;
+				
+				//Delete element from array
 				names.splice(thisNum,1);
 				pprice.splice(thisNum,1);
-				items.splice(thisNum,1)
+				price.splice(thisNum,1);
+				qty.splice(thisNum,1);
 				
 				
 				//Update localStorage after Delete
 				localStorage.setItem ('price', JSON.stringify(pprice));
-				localStorage.setItem ('item', JSON.stringify(items));
+				localStorage.setItem ('mPrice', JSON.stringify(price));
+				localStorage.setItem ('mQty', JSON.stringify(qty));
 				localStorage.setItem ('name', JSON.stringify(names));
 				
 				console.log(names);
@@ -228,7 +223,7 @@
 		    localStorage.setItem(key, value);
 		}catch(oException){
 			if(oException.name == 'QuotaExceededError'){
-				alert("!!!Exceed Maximum Storage Limit!!!");
+				console.log("!!!Exceed Maximum Storage Limit!!!");
 				localStorage.clear();
 			}
 		}
