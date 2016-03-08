@@ -38,10 +38,10 @@
 		 * empty after refresh
 		 * 2016/03/08*/
 		 
-		//Count Products Number
+
 		
+		//Get value from localStorage
         if(itemsAll !== null){
-        	var proNum = JSON.parse(namesAll).length;
 			items=JSON.parse(itemsAll);
         }else{
         	proNum = 0;
@@ -51,6 +51,8 @@
 		}
 		
 		if (namesAll != null) {
+			//Count Products Number
+			var proNum = JSON.parse(namesAll).length;
 			names = JSON.parse(namesAll);
 		}
 		
@@ -106,7 +108,7 @@
 				localStorage.setItem ('price', JSON.stringify(pprice));
 
 				//Alert to costumer
-				alert("You Add " + mName + " in cart successful " + " Price: " + mPrice + "  You already have " +proNum + " products");
+				alert("You Add " + mName + " in cart successful " + " Price: " + mPrice + "  You already have " + proNum + " products");
 				
 				
 			
@@ -173,7 +175,7 @@
            
 			
 			    //Button create function
-				for(var btnNum = 0; btnNum < JSON.parse(priceAll).length; btnNum++){
+				for(var btnNum = 0; btnNum < JSON.parse(namesAll).length; btnNum++){
 				
 					var btnRealNum = btnNum + 1;	//Display real item number
 					var removeBtn = document.createElement('button');    //Create Button
