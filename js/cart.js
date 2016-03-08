@@ -196,12 +196,25 @@
 			
 			
 			//remove item function !!! NEED FIX !!!
+			console.log(names);
 			$(".removeBtn").click(function(){
 			    
-				names.splice(btnNum,1);
+				//Restore button number
+			    var thisNum = $(this).html();
+				thisNum = thisNum.slice(-1) -1;
+				names.splice(thisNum,1);
+				pprice.splice(thisNum,1);
+				items.splice(thisNum,1)
 				
+				
+				//Update localStorage after Delete
+				localStorage.setItem ('price', JSON.stringify(pprice));
+				localStorage.setItem ('item', JSON.stringify(items));
+				localStorage.setItem ('name', JSON.stringify(names));
+				
+				console.log(names);
 			});
-			
+
 		
 		});
 		
