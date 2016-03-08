@@ -29,15 +29,23 @@
 		console.log('Start Count proNum');
 		
 		//Start Count proNum
+		
+		/*ADD BY Andreea.Molnar
+		 * for fix the Items array
+		 * empty after refresh
+		 * 2016/03/08*/
+		
         if(cartAll !== null){
-		
         	var proNum = JSON.parse(cartAll).length;
-			
+			items=JSON.parse(cartAll);
         }else{
-		
         	proNum = 0;
-			
         }
+		if (priceAll != null) {
+			pprice = JSON.parse(priceAll);
+		}
+		
+		
 		
         console.log('proNum: ' + proNum);
 		
@@ -195,7 +203,7 @@
 			
 
 		
-		Check if localStorage oException
+		//Check if localStorage oException
 		try {
 		    localStorage.setItem(key, value);
 		}catch(oException){
