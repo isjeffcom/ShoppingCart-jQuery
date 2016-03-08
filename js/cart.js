@@ -16,28 +16,33 @@
     //DOM ready for all
 	$(document).ready(function(){
 	
-	    console.log('Start initialize');
-		
 		//Statement Ready
 		var items = [];
+		var names = [];
 		var pprice =[];
 		var totalPrice = 0;
-		var cartAll= localStorage.getItem('item');
-        var priceAll = localStorage.getItem('price'); 
-
-        
-		console.log('Start Count proNum');
+		var itemsAll= localStorage.getItem('item');
+		var namesAll = localStorage.getItem('name');
+        var priceAll = localStorage.getItem('price');
 		
-		//Start Count proNum
+		/*items: temp array for storage all items info (name, qty, price with qty)
+		* names: temp array for storage item names in cart
+		* pprice: temp array for storage price
+		* itemsAll: localStorage array for storage all items info (name, qty, price with qty)
+		* namesAll: localStorage array for storage item names in cart
+		* priceAll: localStorage array for storage all price
+		*/
 		
 		/*ADD BY Andreea.Molnar
 		 * for fix the Items array
 		 * empty after refresh
 		 * 2016/03/08*/
+		 
+		//Count Products Number
 		
-        if(cartAll !== null){
-        	var proNum = JSON.parse(cartAll).length;
-			items=JSON.parse(cartAll);
+        if(itemsAll !== null){
+        	var proNum = JSON.parse(namesAll).length;
+			items=JSON.parse(itemsAll);
         }else{
         	proNum = 0;
         }
@@ -45,18 +50,11 @@
 			pprice = JSON.parse(priceAll);
 		}
 		
-		
-		
-        console.log('proNum: ' + proNum);
-		
-		
-		console.log('array items: ' + items);
-        console.log('array pprice: ' + pprice);
-		console.log('array cartAll: ' + cartAll);
-        console.log('array priceAll: ' + pprice);
+		if (namesAll != null) {
+			names = JSON.parse(namesAll);
+		}
 		
         //Add2Cart function
-		console.log('Start Add Function');
 		
 		$(".add").click(function(){
 		
@@ -67,12 +65,22 @@
 				var mQty = $(this).parent().children('.qty').val();
 				// Change type of data to integer forcibly
 				mQty = parseInt(mQty);  
+	
 				
-
+				//Check if items repeat
+				if(names != null){
+					for(var i=0; i<names.length;i++){
+						if(mName == names[i]){
+							alert('Item repeat');
+							console.log(names);
+							return;
+						}
+					}
+				}
 
 				//Calculate the price with quantity
 				if(mQty >=0 ){
-						
+
 					var mPriceCal = mPrice * mQty;
 					mPriceCal = parseFloat(mPriceCal).toFixed(2);  //Fix the calculate issue.
 							
@@ -90,21 +98,20 @@
 
 				items.push(mName,mQty,mPriceCal);
 				localStorage.setItem ('item', JSON.stringify(items));
-
+				
+				names.push(mName);
+				localStorage.setItem ('name', JSON.stringify(names));
 									
 				pprice.push(mPriceCal);
 				localStorage.setItem ('price', JSON.stringify(pprice));
 
 				//Alert to costumer
 				alert("You Add " + mName + " in cart successful " + " Price: " + mPrice + "  You already have " +proNum + " products");
-				console.log('array items: ' + items);
-                console.log('array pprice: ' + pprice);
-				console.log('array cartAll: ' + cartAll);
-                console.log('array priceAll: ' + pprice);
+				
+				
 			
 		});
 		
-		console.log('Cal All Price');
 		
 		//Display Cart Function
 		$(function(){
@@ -127,12 +134,12 @@
 				
 		    }
 			
-		    console.log('Push Cart item to front');
+
 			//Display Cart 2Front
 	        
-			if(cartAll != null){
+			if(namesAll != null){
 			
-				$(".cartItem").html("Cart Product: " + cartAll);
+				$(".cartItem").html("Cart Product: " + namesAll);
 				$(".totalPrice").html("All Price: " + TPrice + " $ ");
 
 			}
@@ -148,7 +155,7 @@
 		
 
 			//Clear Cart
-		    console.log('clear Storage');
+
 			
 			$(".clearCart").click(function(){
 				
@@ -161,7 +168,7 @@
 			
 			
 			//Remove item from Cart
-			console.log('Display the remove btn');
+
 			if(JSON.parse(priceAll) !== null){
            
 			
@@ -174,8 +181,6 @@
 					var bottonValue = document.createTextNode('Remove Item' + btnRealNum);  //Give Button Value
 					removeBtn.appendChild(bottonValue);  //Add Child
 					document.body.appendChild(removeBtn);  
-					
-					
 					
 					}
 
@@ -190,9 +195,9 @@
 			
 			//remove item function !!! NEED FIX !!!
 			$(".removeBtn").click(function(){
-			    console.log(JSON.parse(cartAll));
-
-			
+			    
+				names.splice(btnNum,1);
+				
 			});
 			
 		
