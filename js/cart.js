@@ -28,6 +28,8 @@
         var priceAll = localStorage.getItem('price');
         
         var totalPrice = 0;
+		var TPrice = 0;
+		var tpprice = 0;
 		
 		/*ADD BY Andreea.Molnar
 		 * for fix the Items array
@@ -62,14 +64,13 @@
 					for(var i=0; i<names.length;i++){
 						if(mName == names[i]){
 							alert('Item repeat');
-							console.log(names);
 							return;
 						}
 					}
 				}
 
 				//Calculate the price with quantity
-				if(mQty >=0 ){
+				if(mQty >= 1 &&  mQty <= 100){
 
 					var mPriceCal = mPrice * mQty;
 					mPriceCal = parseFloat(mPriceCal).toFixed(2);  //Fix the calculate issue.
@@ -77,9 +78,9 @@
 				}else{
 							
 					//verity input number
-					alert("Please input a right number");
-					mQty = 1;
-					mPriceCal = mPrice * mQty;
+					alert("Please input a right number (1-100)");
+					return;
+					//do nothing...
 					
 				};
 				
@@ -100,39 +101,59 @@
 				localStorage.setItem ('price', JSON.stringify(pprice));
 
 				//Alert to costumer
-				alert("You Add " + mName + " in cart successful " + " Price: " + mPrice + "  You already have ");
+				alert("You Add " + mName + " in cart successful " + "Quantity: " + mQty + " Price: " + mPriceCal);
+				
+				$(".cartItem").html("Cart Product: " + names);
+				
+				//Calculate Total price 
+				if(names[0] !== undefined){
 
+					tpprice = pprice;
+	
+					for(var i = 0; i < tpprice.length; i++){
+						totalPrice += parseFloat(tpprice[i]);
+						TPrice = totalPrice.toFixed(2);
+					}	
+					
+				}else{
+				
+				//if No item...
+				TPrice = 0;
+				
+				}
+				
+				//Display Total Price
+				$(".totalPrice").html("All Price: " + TPrice + " $ ");
+				
+				
+				
 		});
 		
 		
 		//Display Cart Function
 		$(function(){
 		
-		    //Cal Total price  
-		    var TPrice;
+		    //Cal Total price Secound fix  
+
 			if(names[0] !== undefined){
-				console.log('price calculate info ' + pprice + priceAll);
-	            var ppprice = JSON.parse(priceAll);
-	            console.log(names[0]);
+
+	            tpprice = pprice;
 	
-				for(var i = 0; i < ppprice.length; i++){
-					totalPrice += parseFloat(ppprice[i]);
+				for(var i = 0; i < tpprice.length; i++){
+					totalPrice += parseFloat(tpprice[i]);
 					TPrice = totalPrice.toFixed(2);
 					}	
-		
 			}else{
 				
 				//if No item...
 				TPrice = 0;
-				
 		    }
 			
-
 			//Display Cart 2Front
 	        
-			if(cartAll != null){
+			if(names != null){
 			
-				$(".cartItem").html("Cart Product: " + cartAll);
+				$(".cartItem").html("Cart Product: " + names);
 				$(".totalPrice").html("All Price: " + TPrice + " $ ");
 
 			}
@@ -142,11 +163,11 @@
 			$('.updateCart').click(function(){
 			console.log('Start UpdateCart // refresh the page');
 			
-				location.reload(true)
+				location.reload(true);
 			
 			});
+			
 		
-
 			//Clear Cart
 
 			
@@ -154,45 +175,50 @@
 				
 				alert("Clear Cart");
 				localStorage.clear();
+				location.reload(true);
 				
 			});
 			
 			
 			
-			
+
 			//Remove item from Cart
+			//$.func = {
+				//a: function remove(){
+					if(names !== null){
+						console.log(names.length);
+				   
+						//Button create function
+						for(var btnNum = 0; btnNum < names.length ; btnNum++){
+							console.log(btnNum);
+						
+							var btnRealNum = btnNum + 1;	//Display real item number
+							var removeBtn = document.createElement('button');    //Create Button
+							removeBtn.className = "removeBtn";  //Add className
+							var bottonValue = document.createTextNode('Remove Item' + btnRealNum);  //Give Button Value
+							removeBtn.appendChild(bottonValue);  //Add Child
+							document.body.appendChild(removeBtn);  
+							
+							}
 
-			if(JSON.parse(priceAll) !== null){
-           
-			
-			    //Button create function
-				for(var btnNum = 0; btnNum < JSON.parse(cartAll).length; btnNum++){
-				
-					var btnRealNum = btnNum + 1;	//Display real item number
-					var removeBtn = document.createElement('button');    //Create Button
-					removeBtn.className = "removeBtn";  //Add className
-					var bottonValue = document.createTextNode('Remove Item' + btnRealNum);  //Give Button Value
-					removeBtn.appendChild(bottonValue);  //Add Child
-					document.body.appendChild(removeBtn);  
+					}else{
 					
+						//return null
+
 					}
+				//}
+			//}
 
-			}else{
-			
-			    //return null
-				
-			    }
-				
-
-			
-			
 			//remove item function
-			console.log(names);
+
 			$(".removeBtn").click(function(){
 			    
 				//Restore array number from button
 			    var thisNum = $(this).html();
 				thisNum = thisNum.slice(-1) -1;
+				
+				//Display which item has been remove
+				alert("Successful remove item : " + names[thisNum] + " from your shopping cart");
 				
 				//Delete element from array
 				names.splice(thisNum,1);
@@ -207,7 +233,7 @@
 				localStorage.setItem ('mQty', JSON.stringify(qty));
 				localStorage.setItem ('name', JSON.stringify(names));
 				
-				console.log(names);
+
 			});
 
 		
