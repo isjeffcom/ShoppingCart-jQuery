@@ -31,6 +31,13 @@
 		var TPrice = 0;
 		var tpprice = 0;
 		
+		var btnNum;
+		var btnRealNum;
+		var removeBtn;
+		var bottonValue;
+		
+		
+		
 		/*ADD BY Andreea.Molnar
 		 * for fix the Items array
 		 * empty after refresh
@@ -122,10 +129,30 @@
 				
 				}
 				
+				
 				//Display Total Price
 				$(".totalPrice").html("All Price: " + TPrice + " $ ");
 				
-				
+							
+				if(names !== null){
+				   
+					//Button create function
+					$(".removeBtn").remove();
+					
+					for(btnNum = 0; btnNum < names.length ; btnNum++){
+							btnRealNum = btnNum + 1;	//Display real item number
+							removeBtn = document.createElement('button');    //Create Button
+							removeBtn.className = "removeBtn";  //Add className
+							bottonValue = document.createTextNode('Remove Item' + btnRealNum);  //Give Button Value
+							removeBtn.appendChild(bottonValue);  //Add Child
+							document.body.appendChild(removeBtn);  
+							}
+
+				}else{
+					
+						//do nothing
+
+				}
 				
 		});
 		
@@ -180,34 +207,25 @@
 			});
 			
 			
-			
-
-			//Remove item from Cart
-			//$.func = {
-				//a: function remove(){
-					if(names !== null){
-						console.log(names.length);
+			if(names !== null){
 				   
-						//Button create function
-						for(var btnNum = 0; btnNum < names.length ; btnNum++){
-							console.log(btnNum);
-						
-							var btnRealNum = btnNum + 1;	//Display real item number
-							var removeBtn = document.createElement('button');    //Create Button
+					//Button create function
+					$(".removeBtn").remove();
+					
+					for(btnNum = 0; btnNum < names.length ; btnNum++){
+							btnRealNum = btnNum + 1;	//Display real item number
+							removeBtn = document.createElement('button');    //Create Button
 							removeBtn.className = "removeBtn";  //Add className
-							var bottonValue = document.createTextNode('Remove Item' + btnRealNum);  //Give Button Value
+							bottonValue = document.createTextNode('Remove Item' + btnRealNum);  //Give Button Value
 							removeBtn.appendChild(bottonValue);  //Add Child
 							document.body.appendChild(removeBtn);  
-							
 							}
 
-					}else{
+				}else{
 					
-						//return null
+						//do nothing
 
-					}
-				//}
-			//}
+				}
 
 			//remove item function
 
