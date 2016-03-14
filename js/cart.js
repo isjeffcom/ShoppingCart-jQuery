@@ -233,6 +233,10 @@
 				localStorage.setItem ('mQty', JSON.stringify(qty));
 				localStorage.setItem ('name', JSON.stringify(names));
 				
+				//Update Page
+				location.reload(true);
+
+				
 
 			});
 
