@@ -10,8 +10,20 @@
 
 
 
-//Main Function 
+//jQuery Function 
 (function($){
+
+	/*Interface Explanation
+		 *names: All item in cart array (no '[]')
+		 *cartAll: All item in cart array (with '[]')
+		 *pprice: All price array (no '[]')
+		 *priceAll: All price array (with '[]')
+		 *TPrice: Total price (calculate all price)
+		 *qty: Item quantity array (no '[]')
+		 *mqtyAll: Item quantity array (with '[]')
+		 *mQty: User input quantity for THIS (current select) item (only use in add function)
+		 *names.length: get number > how many item in cart
+	*/
 
     //DOM ready for all
 	$(document).ready(function(){
@@ -29,22 +41,21 @@
         
         var totalPrice = 0;
 		var TPrice = 0;
-		var tpprice = 0;
+		var times= 0;
+		var tpprice;
 		
 		var btnNum;
 		var btnRealNum;
 		var removeBtn;
 		var bottonValue;
 		
-		
-		
+
+
 		/*ADD BY Andreea.Molnar
 		 * for fix the Items array
 		 * empty after refresh
 		 * 2016/03/08*/
 		 
-
-		
 		//Get value from localStorage
 		if (cartAll != null) {
 			//Count Products Number
@@ -93,8 +104,6 @@
 				
 				//Add item to HTML localStorage 
 								
-				
-				
 				qty.push(mQty);
 				localStorage.setItem ('mQty', JSON.stringify(qty));
 				
@@ -113,22 +122,13 @@
 				$(".cartItem").html("Cart Product: " + names);
 				
 				//Calculate Total price 
-				if(names[0] !== undefined){
+				tpprice = pprice;
 
-					tpprice = pprice;
-	
-					for(var i = 0; i < tpprice.length; i++){
-						totalPrice += parseFloat(tpprice[i]);
-						TPrice = totalPrice.toFixed(2);
-					}	
-					
-				}else{
-				
-				//if No item...
-				TPrice = 0;
-				
-				}
-				
+				for(var i = times; i < tpprice.length; i++){
+					totalPrice += parseFloat(tpprice[i]);
+					TPrice = totalPrice.toFixed(2);
+				}	
+				times++;
 				
 				//Display Total Price
 				$(".totalPrice").html("All Price: " + TPrice + " $ ");
@@ -137,8 +137,10 @@
 				if(names !== null){
 				   
 					//Button create function
+					//Clear exist button
 					$(".removeBtn").remove();
 					
+					//Create child
 					for(btnNum = 0; btnNum < names.length ; btnNum++){
 							btnRealNum = btnNum + 1;	//Display real item number
 							removeBtn = document.createElement('button');    //Create Button
@@ -185,8 +187,6 @@
 
 			}
 		
-
-			
 			$('.updateCart').click(function(){
 			console.log('Start UpdateCart // refresh the page');
 			
@@ -194,7 +194,6 @@
 			
 			});
 			
-		
 			//Clear Cart
 
 			
@@ -205,7 +204,6 @@
 				location.reload(true);
 				
 			});
-			
 			
 			if(names !== null){
 				   
@@ -244,7 +242,6 @@
 				price.splice(thisNum,1);
 				qty.splice(thisNum,1);
 				
-				
 				//Update localStorage after Delete
 				localStorage.setItem ('price', JSON.stringify(pprice));
 				localStorage.setItem ('mPrice', JSON.stringify(price));
@@ -253,19 +250,10 @@
 				
 				//Update Page
 				location.reload(true);
-
-				
-
 			});
-
-		
-		});
-		
-
-        
 			
+		});
 
-		
 		//Check if localStorage oException
 		try {
 		    localStorage.setItem(key, value);
