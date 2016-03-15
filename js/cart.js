@@ -145,7 +145,7 @@
 							btnRealNum = btnNum + 1;	//Display real item number
 							removeBtn = document.createElement('button');    //Create Button
 							removeBtn.className = "removeBtn";  //Add className
-							bottonValue = document.createTextNode('Remove Item' + btnRealNum);  //Give Button Value
+							bottonValue = document.createTextNode('Item' + btnRealNum);  //Give Button Value
 							removeBtn.appendChild(bottonValue);  //Add Child
 							document.body.appendChild(removeBtn);  
 							}
