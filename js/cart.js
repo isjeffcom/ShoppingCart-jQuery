@@ -38,6 +38,7 @@
 		var mqtyAll= localStorage.getItem('mQty')
 		var cartAll = localStorage.getItem('name');
         var priceAll = localStorage.getItem('price');
+		var timeAll = localStorage.getItem('time');
         
         var totalPrice = 0;
 		var TPrice = 0;
@@ -63,6 +64,7 @@
 			price=JSON.parse(mpriceAll);
 			pprice = JSON.parse(priceAll);
 			qty = JSON.parse(mqtyAll);
+			times = JSON.parse(timeAll);
 		}
 		
         //Add2Cart function
@@ -86,12 +88,13 @@
 						}
 					}
 				}
-
+				
 				//Calculate the price with quantity
 				if(mQty >= 1 &&  mQty <= 100){
 
 					var mPriceCal = mPrice * mQty;
 					mPriceCal = parseFloat(mPriceCal).toFixed(2);  //Fix the calculate issue.
+					
 							
 				}else{
 							
@@ -119,7 +122,7 @@
 				//Alert to costumer
 				alert("You Add " + mName + " in cart successful " + "Quantity: " + mQty + " Price: " + mPriceCal);
 				
-				$(".cartItem").html("Cart Product: " + names);
+				$(".cartItem").html("Items:  " + names);
 				
 				//Calculate Total price 
 				tpprice = pprice;
@@ -129,11 +132,17 @@
 					TPrice = totalPrice.toFixed(2);
 				}	
 				times++;
+				localStorage.setItem('time', JSON.stringify(times));
+				
+				console.log("mPriceCal : " + mPriceCal);
+				console.log("pprice : " + pprice);
+				console.log("tpprice : " + tpprice);
+				console.log("TPrice : " + TPrice);
+				console.log("Times: " + times)
 				
 				//Display Total Price
-				$(".totalPrice").html("All Price: " + TPrice + " $ ");
-				
-							
+				$(".totalPrice").html("</br>" + TPrice + " £ " + "</br>");
+						
 				if(names !== null){
 				   
 					//Button create function
@@ -146,8 +155,9 @@
 							removeBtn = document.createElement('button');    //Create Button
 							removeBtn.className = "removeBtn";  //Add className
 							bottonValue = document.createTextNode('Item' + btnRealNum);  //Give Button Value
-							removeBtn.appendChild(bottonValue);  //Add Child
-							document.body.appendChild(removeBtn);  
+							btnCreate = document.body.appendChild(removeBtn);  	
+							removeBtn.appendChild(bottonValue);
+							$(".rbtn").before(btnCreate, "  ");
 							}
 
 				}else{
@@ -157,7 +167,6 @@
 				}
 				
 		});
-		
 		
 		//Display Cart Function
 		$(function(){
@@ -182,8 +191,9 @@
 	        
 			if(names != null){
 			
-				$(".cartItem").html("Cart Product: " + names);
-				$(".totalPrice").html("All Price: " + TPrice + " $ ");
+				$(".cartItem").html("Items:  " + names);
+				
+				$(".totalPrice").html("</br>" + TPrice + " £ " + "</br>");
 
 			}
 		
@@ -215,8 +225,9 @@
 							removeBtn = document.createElement('button');    //Create Button
 							removeBtn.className = "removeBtn";  //Add className
 							bottonValue = document.createTextNode('Remove Item' + btnRealNum);  //Give Button Value
-							removeBtn.appendChild(bottonValue);  //Add Child
-							document.body.appendChild(removeBtn);  
+							btnCreate = document.body.appendChild(removeBtn);  	
+							removeBtn.appendChild(bottonValue);
+							$(".rbtn").before(btnCreate, "  ");
 							}
 
 				}else{
@@ -247,6 +258,9 @@
 				localStorage.setItem ('mPrice', JSON.stringify(price));
 				localStorage.setItem ('mQty', JSON.stringify(qty));
 				localStorage.setItem ('name', JSON.stringify(names));
+				
+				times = times-1;
+				localStorage.setItem('time', JSON.stringify(times));
 				
 				//Update Page
 				location.reload(true);
