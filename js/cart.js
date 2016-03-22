@@ -33,13 +33,23 @@
 		var price = [];
 		var names = [];
 		var pprice =[];
+		var singlePrice=[];
 	
 		var mpriceAll= localStorage.getItem('mPrice');
 		var mqtyAll= localStorage.getItem('mQty')
 		var cartAll = localStorage.getItem('name');
         var priceAll = localStorage.getItem('price');
 		var timeAll = localStorage.getItem('time');
+		var singlePriceAll = localStorage.getItem('singlePrice');
         
+		var userName = localStorage.getItem('user-name');
+		var userNumber = localStorage.getItem('user-number');
+		var userEmail =  localStorage.getItem('user-email') ;
+		var userCountry = localStorage.getItem('user-country')
+		var userAddress= localStorage.getItem('user-address');
+		var userBankcard= localStorage.getItem('user-bankcard');
+		var userSecurity= localStorage.getItem('User-security');
+		
         var totalPrice = 0;
 		var TPrice = 0;
 		var times= 0;
@@ -50,7 +60,6 @@
 		var removeBtn;
 		var bottonValue;
 		
-
 
 		/*ADD BY Andreea.Molnar
 		 * for fix the Items array
@@ -65,6 +74,8 @@
 			pprice = JSON.parse(priceAll);
 			qty = JSON.parse(mqtyAll);
 			times = JSON.parse(timeAll);
+			singlePrices=JSON.parse(singlePriceAll);
+
 		}
 		
         //Add2Cart function
@@ -87,6 +98,11 @@
 							return;
 						}
 					}
+					
+					if(names.length >= 5){
+						alert("You only can add 5 items to cart once");
+						return;
+					}
 				}
 				
 				//Calculate the price with quantity
@@ -94,6 +110,7 @@
 
 					var mPriceCal = mPrice * mQty;
 					mPriceCal = parseFloat(mPriceCal).toFixed(2);  //Fix the calculate issue.
+					console.log("mPriceCal : "+mPriceCal);
 					
 							
 				}else{
@@ -118,6 +135,9 @@
 									
 				pprice.push(mPriceCal);
 				localStorage.setItem ('price', JSON.stringify(pprice));
+				
+				singlePrice.push(mPrice);
+				localStorage.setItem ('singlePrice', JSON.stringify(singlePrice));
 
 				//Alert to costumer
 				alert("You Add " + mName + " in cart successful " + "Quantity: " + mQty + " Price: " + mPriceCal);
@@ -131,17 +151,12 @@
 					totalPrice += parseFloat(tpprice[i]);
 					TPrice = totalPrice.toFixed(2);
 				}	
+				console.log("totalprice : "+ TPrice);
 				times++;
 				localStorage.setItem('time', JSON.stringify(times));
 				
-				console.log("mPriceCal : " + mPriceCal);
-				console.log("pprice : " + pprice);
-				console.log("tpprice : " + tpprice);
-				console.log("TPrice : " + TPrice);
-				console.log("Times: " + times)
-				
 				//Display Total Price
-				$(".totalPrice").html("</br>" + TPrice + " £ " + "</br>");
+				$(".totalPrice").html("</br>" + " £ " + TPrice + "</br>");
 						
 				if(names !== null){
 				   
@@ -193,7 +208,7 @@
 			
 				$(".cartItem").html("Items:  " + names);
 				
-				$(".totalPrice").html("</br>" + TPrice + " £ " + "</br>");
+				$(".totalPrice").html("</br>" + " £ " + TPrice + "</br>");
 
 			}
 		
@@ -267,7 +282,94 @@
 			});
 			
 		});
+		
+		console.log("allprice: " + price);
+		console.log("allprice2: " + priceAll)
+		
+		//Connect to Paypal Payment
+		if(cartAll != null){
+			
+			//Set paypal info
+			var pp_Name_1 = names[0];
+			var pp_Qty_1 = qty[0];
+			var pp_Amount_1 = singlePrices[0];
+			console.log(pp_Amount_1);
+			
+			var pp_Name_2 = names[1];
+			var pp_Qty_2 = qty[1];
+			var pp_Amount_2 = singlePrices[1];
+			
+			var pp_Name_3 = names[2];
+			var pp_Qty_3 = qty[2];
+			var pp_Amount_3 = singlePrices[2];
+			
+			var pp_Name_4 = names[3];
+			var pp_Qty_4 = qty[3];
+			var pp_Amount_4 = singlePrices[3];
+			
+			var pp_Name_5 = names[4];
+			var pp_Qty_5 = qty[4];
+			var pp_Amount_5 = singlePrices[4];
+			
+			//Push info to paypal
+			$("#ppQty_1").val(pp_Qty_1);
+			$("#ppName_1").val(pp_Name_1);
+			$("#ppAmount_1").val(pp_Amount_1);
+			
+			$("#ppQty_2").val(pp_Qty_2);
+			$("#ppName_2").val(pp_Name_2);
+			$("#ppAmount_2").val(pp_Amount_2);
+			
+			$("#ppQty_3").val(pp_Qty_3);
+			$("#ppName_3").val(pp_Name_3);
+			$("#ppAmount_3").val(pp_Amount_3);
+			
+			$("#ppQty_4").val(pp_Qty_4);
+			$("#ppName_4").val(pp_Name_4);
+			$("#ppAmount_4").val(pp_Amount_4);
 
+			$("#ppQty_5").val(pp_Qty_5);
+			$("#ppName_5").val(pp_Name_5);
+			$("#ppAmount_5").val(pp_Amount_5);
+		}
+
+		//User Information Function
+		$("#submit-info").click(function(){
+		
+	
+			mCName = $('.CName').val();
+			mCNumber = $('.CNumber').val();
+			mCEmail = $('.CEmail').val();
+			mCCountry = $('.CCountry').val();
+			mCAddress = $('.CAddress').val();
+			mCBank = $('.CBankCard').val();
+			mCsecurity = $('.Csecurity').val();
+			
+			localStorage.setItem('user-name', JSON.stringify(mCName));
+			localStorage.setItem('user-number', JSON.stringify(mCNumber));
+			localStorage.setItem('user-email', JSON.stringify(mCEmail));
+			localStorage.setItem('user-country', JSON.stringify(mCCountry));
+			localStorage.setItem('user-address', JSON.stringify(mCAddress));
+			localStorage.setItem('user-bankcard', JSON.stringify(mCBank));
+			localStorage.setItem('User-security', JSON.stringify(mCsecurity));
+				
+		});
+		
+
+		//Display User Information
+		$("#DUN").html(userName);
+		$("#DUNB").html(userNumber);
+		$("#DUE").html(userEmail);
+		$("#DUC").html(userCountry);
+		$("#DUA").html(userAddress);
+		$("#DUBC").html(userBankcard);
+		$("#DUSN").html("***");
+		
+
+		
+		$(".cartItem").html("Items:  " + names + "</br>");
+		$(".totalPrice").html("</br>" + TPrice + " £ " + "</br>");
+		
 		//Check if localStorage oException
 		try {
 		    localStorage.setItem(key, value);

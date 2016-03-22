@@ -101,7 +101,56 @@
 	</div>
 	
 
+	<!--PAYPAL PAYMENT FORM START-->
 
+		
+			<form target="paypal" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+			<input type="hidden" name="cmd" value="_cart">
+			<input type="hidden" name="upload" value="1">
+			<input type="hidden" name="business" value="isjeffcom@gmail.com">
+			<!-- Begin First Item -->
+			<input type="hidden" id = "ppQty_1" name="quantity_1" value="1">
+			<input type="hidden" id = "ppName_1" name="item_name_1" value="Item A">
+			<input type="hidden" name="item_number_1" value="1">
+			<input type="hidden" id = "ppAmount_1" name="amount_1" value="0.01">
+			<!-- End First Item -->
+			<!-- Begin Second Item -->
+			<input type="hidden" id = "ppQty_2" name="quantity_2" value="1">
+			<input type="hidden" id = "ppName_2" name="item_name_2" value="Test Item B">
+			<input type="hidden" name="item_number_2" value="2">
+			<input type="hidden" id = "ppAmount_2" name="amount_2" value="0.02">
+			<!-- End Second Item -->
+			<!-- Begin Third Item -->
+			<input type="hidden" id = "ppQty_3" name="quantity_3" value="1">
+			<input type="hidden" id = "ppName_3" name="item_name_3" value="Test Item C">
+			<input type="hidden" name="item_number_3" value="3">
+			<input type="hidden" id = "ppAmount_3" name="amount_3" value="0.03">
+			<!-- End Third Item -->
+			
+			<!-- Begin Third Item -->
+			<input type="hidden" id = "ppQty_4" name="quantity_4" value="1">
+			<input type="hidden" id = "ppName_4" name="item_name_4" value="Test Item C">
+			<input type="hidden" name="item_number_4" value="4">
+			<input type="hidden" id = "ppAmount_4" name="amount_4" value="0.03">
+			<!-- End Third Item -->
+			
+			<!-- Begin Third Item -->
+			<input type="hidden" id = "ppQty_5" name="quantity_5" value="1">
+			<input type="hidden" id = "ppName_5" name="item_name_5" value="Test Item C">
+			<input type="hidden" name="item_number_5" value="5">
+			<input type="hidden" id = "ppAmount_5" name="amount_5" value="0.03">
+			<!-- End Third Item -->
+			<input type="hidden"  name="currency_code" value="GBP">
+			<!--<input type="hidden" name="tax_cart" value="5.13"> -->
+			<br>
+			<input type="image" src="./img/paypal.png" border="0" name="upload" class="pppayBtn" alt="Make payments with PayPal - it's fast, free and secure!" >
+			</form>
+		
+
+		
+		
+		
+		<!--PAYPAL PAYMENT FORM END-->
 
 </body>
 
