@@ -1,16 +1,16 @@
 /*
     
 	Easy Shopping Cart 
-    Create By Jeff WU
-	from 2016/02/15 to ...
+    Create By WU JIANFENG
+    Co-op with Beau Wethrell, Cameron Auden, Liam White
+	from 15/02/2016 to 22/03/2016
 	for University of Portsmouth
-	unfinished
 	
 */
 
 
 
-//jQuery Function 
+//jQuery Function
 (function($){
 
 	/*Interface Explanation
@@ -60,13 +60,8 @@
 		var removeBtn;
 		var bottonValue;
 		
-
-		/*ADD BY Andreea.Molnar
-		 * for fix the Items array
-		 * empty after refresh
-		 * 2016/03/08*/
 		 
-		//Get value from localStorage
+		//Get value from localStorage. 
 		if (cartAll != null) {
 			//Count Products Number
 			names = JSON.parse(cartAll);
@@ -110,7 +105,6 @@
 
 					var mPriceCal = mPrice * mQty;
 					mPriceCal = parseFloat(mPriceCal).toFixed(2);  //Fix the calculate issue.
-					console.log("mPriceCal : "+mPriceCal);
 					
 							
 				}else{
@@ -151,7 +145,6 @@
 					totalPrice += parseFloat(tpprice[i]);
 					TPrice = totalPrice.toFixed(2);
 				}	
-				console.log("totalprice : "+ TPrice);
 				times++;
 				localStorage.setItem('time', JSON.stringify(times));
 				
@@ -212,8 +205,8 @@
 
 			}
 		
+			//Enable Remove Button
 			$('.updateCart').click(function(){
-			console.log('Start UpdateCart // refresh the page');
 			
 				location.reload(true);
 			
@@ -230,6 +223,8 @@
 				
 			});
 			
+			
+			//Create Remove Button
 			if(names !== null){
 				   
 					//Button create function
@@ -283,8 +278,6 @@
 			
 		});
 		
-		console.log("allprice: " + price);
-		console.log("allprice2: " + priceAll)
 		
 		//Connect to Paypal Payment
 		if(cartAll != null){
@@ -293,7 +286,6 @@
 			var pp_Name_1 = names[0];
 			var pp_Qty_1 = qty[0];
 			var pp_Amount_1 = singlePrices[0];
-			console.log(pp_Amount_1);
 			
 			var pp_Name_2 = names[1];
 			var pp_Qty_2 = qty[1];
@@ -334,7 +326,7 @@
 		}
 
 		//User Information Function
-		$("#submit-info").click(function(){
+		$(".cardpayBtn").click(function(){
 		
 	
 			mCName = $('.CName').val();
@@ -345,13 +337,21 @@
 			mCBank = $('.CBankCard').val();
 			mCsecurity = $('.Csecurity').val();
 			
-			localStorage.setItem('user-name', JSON.stringify(mCName));
-			localStorage.setItem('user-number', JSON.stringify(mCNumber));
-			localStorage.setItem('user-email', JSON.stringify(mCEmail));
-			localStorage.setItem('user-country', JSON.stringify(mCCountry));
-			localStorage.setItem('user-address', JSON.stringify(mCAddress));
-			localStorage.setItem('user-bankcard', JSON.stringify(mCBank));
-			localStorage.setItem('User-security', JSON.stringify(mCsecurity));
+			
+			if(mCName == "" || mCNumber == "" || mCEmail == "" || mCCountry == "" || mCAddress == ""){
+				alert("You need to input your infomation");
+			} else {
+				localStorage.setItem('user-name', JSON.stringify(mCName));
+				localStorage.setItem('user-number', JSON.stringify(mCNumber));
+				localStorage.setItem('user-email', JSON.stringify(mCEmail));
+				localStorage.setItem('user-country', JSON.stringify(mCCountry));
+				localStorage.setItem('user-address', JSON.stringify(mCAddress));
+				localStorage.setItem('user-bankcard', JSON.stringify(mCBank));
+				localStorage.setItem('User-security', JSON.stringify(mCsecurity));
+				window.open("final.html");
+			}
+			
+
 				
 		});
 		
@@ -364,6 +364,7 @@
 		$("#DUA").html(userAddress);
 		$("#DUBC").html(userBankcard);
 		$("#DUSN").html("***");
+
 		
 
 		
